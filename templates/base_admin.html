@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Grocery Admin Page</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .navbar {
+            background-color: #43A047;
+            color: #fff;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+        }
+        .navbar-brand {
+            color: #fff;
+            font-size: 24px;
+        }
+        .navbar-nav .nav-link {
+            color: #fff;
+        }
+
+        .main-content {
+            flex: 1;
+            padding-top: 70px;
+            padding-bottom: 50px;
+            margin-top: 70px;
+        }
+
+        .footer {
+            background-color: #F8F9FA;
+            color: #000;
+            text-align: center;
+            padding: 10px 0;
+            width: 100%;
+        }
+
+        body {
+            display: flex;
+            padding-top: 50px;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        html {
+            position: relative;
+        }
+
+        .page-wrapper {
+            min-height: calc(100vh - 50px);
+            box-sizing: border-box;
+        }
+        .user-info-box {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 200px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+
+        .nav-item:hover .user-info-box {
+            display: block;
+        }
+        .nav-item {
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <a class="navbar-brand" href="#">Grocery Admin Page</a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ url_for('dashboard_admin') }}">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('get_products') }}">Products</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('get_categories') }}">Categories</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('get_orders') }}">Orders</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('get_customers') }}">Customers</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('get_managers') }}">My Account</a>
+                    <div class="user-info-box">
+                        <p style="color: #000; font-size: 14px;">Night Manager</p>
+                        <a href="{{ url_for('logout') }}">Logout</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content (Will be filled with content from different pages) -->
+    <div class="container mt-4 main-containt">
+        <div class="page-wrapper">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>&copy; 2023 Grocery App. All rights reserved.</p>
+    </div>
+</body>
+</html>

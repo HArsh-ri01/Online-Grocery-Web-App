@@ -1,0 +1,64 @@
+{% extends 'base_admin.html' %}
+
+{% block content %}
+    <style>
+        .orders-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .order-card {
+            border: 1px solid #ccc;
+            box-shadow: 2px 2px 6px 0px rgba(0, 0, 0, 0.3);
+            margin-bottom: 20px;
+            padding: 20px;
+        }
+
+        .order-info {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .order-items {
+            margin-top: 10px;
+        }
+
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        .product-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 10px;
+        }
+    </style>
+    <h1>All Orders</h1>
+    <div class="orders-container">
+        {% for order in orders %}
+            <div class="order-card">
+                <div class="order-info">Order ID: {{ order.order_id }}</div>
+                <div class="order-info">User ID: {{ order.user_id }}</div>
+                <div class="order-info">Sold Date: {{ order.sold_date }}</div>
+                <div class="order-items">
+                    {% for item in order.order_items %}
+                        <div class="order-item">
+                            <div>
+                                <img class="product-image" src="{{ url_for('static', filename=item.product.image_path) }}" alt="{{ item.product.product_name }}">
+                                {{ item.product.product_name }}
+                            </div>
+                            <div>{{ item.quantity }}</div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends 'base_admin.html' %}
+
+{% block content %}
+<style>
+    .container {
+        margin-top: 20px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    th, td {
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: 1px solid #ccc;
+    }
+    th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+    }
+    tbody tr:hover {
+        background-color: #f2f2f2;
+    }
+</style>
+<div class="container"></div>
+    <h1>Managers</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Manager ID</th>
+                <th>Manager Name</th>
+                <th>Manager Password</th>
+                <th>Manager Contact</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for manager in managers %}
+                <tr>
+                    <td>{{ manager.manager_id }}</td>
+                    <td>{{ manager.manager_name }}</td>
+                    <td>{{ manager.manager_password }}</td>
+                    <td>{{ manager.manager_contact }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>    
+{% endblock %}

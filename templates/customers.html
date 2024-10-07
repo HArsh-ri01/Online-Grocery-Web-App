@@ -1,0 +1,60 @@
+{% extends 'base_admin.html' %}
+
+{% block content %}
+<style>
+    .container {
+        margin-top: 20px;
+    }
+
+    /* Table styling */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    th, td {
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: 1px solid #ccc;
+    }
+    th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+    }
+    tbody tr:hover {
+        background-color: #f2f2f2;
+    }
+</style>
+<div class="container">
+    <h1>Customers List</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Customer ID</th>
+                <th>Name</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Contact</th>
+                <th>Country</th>
+                <th>State</th>
+                <th>City</th>
+                <th>Pincode</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for customer in customers %}
+                <tr>
+                    <td>{{ customer.customer_id }}</td>
+                    <td>{{ customer.customer_name }}</td>
+                    <td>{{ customer.customer_Username }}</td>
+                    <td>{{ customer.customer_mail }}</td>
+                    <td>{{ customer.customer_contact }}</td>
+                    <td>{{ customer.customer_country }}</td>
+                    <td>{{ customer.customer_state }}</td>
+                    <td>{{ customer.customer_city }}</td>
+                    <td>{{ customer.customer_pincode }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>    
+{% endblock %}

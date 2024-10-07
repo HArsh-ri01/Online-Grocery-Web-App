@@ -1,0 +1,125 @@
+{% extends 'base_user.html' %}
+
+{% block content %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        table th {
+            background-color: #f2f2f2;
+        }
+
+        table img {
+            max-width: 100px;
+            height: auto;
+            vertical-align: middle;
+        }
+
+        form {
+            display: inline-block;
+        }
+
+        input[type="number"] {
+            width: 50px;
+            padding: 4px;
+        }
+
+        input[type="submit"] {
+            background-color: #43A047;
+            color: #ffffff;
+            border: none;
+            padding: 6px 12px;
+            cursor: pointer;
+        }
+
+        .total-price {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+
+        .place-order-btn {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Your Cart</h1>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class="flashes">
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+        <table>
+            <tr>
+                <th>Product</th>
+                <th>Image</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Remove Product</th>
+            </tr>
+            {% for item in cart.cart_items %}
+                <tr>
+                    <td>{{ item.product.product_name }}</td>
+                    <td><img src="{{ url_for('static', filename=item.product.image_path) }}" alt="Product Image"></td>
+                    <td>{{ item.product.rate_per_unit }}</td>
+                    <td>
+                        <form method="post" action="{{ url_for('update_cart_item', cart_item_id=item.cart_item_id) }}">
+                            <input type="number" name="quantity" value="{{ item.quantity }}" min="1">
+                            <input type="submit" value="Update">
+                        </form>
+                    </td>
+                    <td><a href="{{ url_for('delete_cart_item', cart_item_id=item.cart_item_id) }}">Delete</a></td>
+                </tr>
+            {% endfor %}
+        </table>
+
+        <div class="total-price">
+            <h2>Total Price: {{ total_price }}</h2>
+        </div>
+
+        <div class="place-order-btn">
+            <form method="post" action="{{ url_for('place_order') }}">
+                <input type="submit" value="Place Order">
+            </form>
+        </div>
+    </div>
+{% endblock %}
+

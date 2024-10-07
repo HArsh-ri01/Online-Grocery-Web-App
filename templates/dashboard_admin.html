@@ -1,0 +1,52 @@
+{% extends 'base_admin.html' %}
+
+{% block content %}
+<title>Admin Dashboard</title>
+<style>
+    .card {
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        transition: 0.3s;
+        width: 300px;
+        margin: 10px;
+        display: inline-block;
+    }
+    .card:hover {
+        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    }
+    .container {
+        padding: 2px 16px;
+    }
+    img {
+        width: 100%;
+        height: 200px;
+        object-fit: contain;
+    }
+</style>
+<h1>Admin Dashboard</h1>
+<h2>Products</h2>
+<div id="productsContainer">
+    {% for product in products %}
+        <div class="card">
+            <img src="{{ url_for('static', filename=product.image_path) }}" alt="{{ product.product_name }}">
+            <div class="container">
+                <h4>{{ product.product_name }}</h4>
+                <p>Price: Rs{{ product.rate_per_unit }}</p>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+<h2>Recent Orders</h2>
+<div id="ordersContainer">
+    {% for order in orders %}
+        <div class="card">
+            <div class="container">
+                <h4>Order ID: {{ order.order_id }}</h4>
+                <p>Date: {{ order.sold_date }}</p>
+                {% if order.order_items %}
+                    <p>Total: Rs{{ order.order_items|sum(attribute='quantity') * order.order_items[0].product.rate_per_unit }}</p>
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

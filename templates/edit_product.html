@@ -1,0 +1,88 @@
+{% extends 'base_admin.html' %}
+
+{% block content %}
+<style>
+    .container {
+        margin-top: 20px;
+    }
+    
+    form {
+        max-width: 500px;
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 2px 2px 6px 0px rgba(0, 0, 0, 0.3);
+    }
+    form label {
+        font-weight: bold;
+    }
+    form input[type="text"],
+    form input[type="number"],
+    form select,
+    form input[type="file"] {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+    form select {
+        height: 40px;
+    }
+    form input[type="submit"] {
+        background-color: #43A047;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+    }
+    form input[type="submit"]:hover {
+        background-color: #2E7D32;
+    }
+    
+    .back-link {
+        display: block;
+        text-align: center;
+        margin-top: 20px;
+    }
+</style>
+    <div class="container">
+        <h1>Edit Product</h1>
+        <form method="post" action="{{ url_for('edit_product', product_id=product.product_id) }}" enctype="multipart/form-data">
+            <label for="product_name">Product Name:</label>
+            <input type="text" id="product_name" name="product_name" value="{{ product.product_name }}" required><br>
+
+            <label for="manufacture_date">Manufacture Date:</label>
+            <input type="date" id="manufacture_date" name="manufacture_date" value="{{ product.manufacture_date }}" required><br>
+
+            <label for="expiry_date">Expiry Date:</label>
+            <input type="date" id="expiry_date" name="expiry_date" value="{{ product.expiry_date }}" required><br>
+
+            <label for="rate_per_unit">Rate Per Unit:</label>
+            <input type="number" id="rate_per_unit" name="rate_per_unit" value="{{ product.rate_per_unit }}" required><br>
+
+            <label for="product_unit">Unit:</label>
+            <select id="product_unit" name="product_unit" required>
+                {% for unit in units %}
+                    <option value="{{ unit.unit_name }}"{% if unit.unit_name == product.product_unit %}selected{% endif %}>{{ unit.unit_name }}</option>
+                {% endfor %}
+            </select><br>
+
+            <label for="stocks_available">Stocks Available:</label>
+            <input type="number" id="stocks_available" name="stocks_available" value="{{ product.stocks_available }}" required><br>
+
+            <label for="product_category">Product Category:</label>
+            <select id="product_category" name="product_category" required>
+                {% for category in categories %}
+                    <option value="{{ category.category_name }}" {% if category.category_name == product.product_category %}selected{% endif %}>{{ category.category_name }}</option>
+                {% endfor %}
+            </select><br>
+
+            <label for="image">Product Image:</label>
+            <input type="file" id="image" name="image" value="{{ product.image_path }}"><br>
+
+            <input type="submit" value="Save Changes">
+        </form>
+    </div>
+    <a class="back-link" href="{{ url_for('get_products') }}">Back to Products</a>
+{% endblock %}
